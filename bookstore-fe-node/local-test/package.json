@@ -1,0 +1,16 @@
+{
+  "name": "bookstore-fe",
+  "version": "1.0.0",
+  "description": "Bookstore nodejs front-end",
+  "main": "app.js",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
