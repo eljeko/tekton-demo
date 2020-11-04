@@ -1,5 +1,16 @@
 # Frontend Example
 
+#Start node
+
+npm install
+
+export BOOKSURL=http://<HOST>:<PORT>
+export BOOKSTOCKAPI=http://<HOST>:<PORT>
+
+node app.js
+
+
+# OCP setup
 To test this sub project on ocp:
 
 ```
