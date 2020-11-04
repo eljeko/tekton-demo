@@ -15,7 +15,9 @@ app.use(express.static(path.join(__dirname, "public")));
 //process.env.BOOKSURL
 //"http://test.test"
 app.get("/", (req, res) => {
-  res.render("index", {pagetitle: "Acme Bookstore", booksapiurl: process.env.BOOKSURL});                    
+  res.render("index", {pagetitle: "Acme Bookstore", booksapiurl: process.env.BOOKSAPIURL});                    
 });
 
-var server = app.listen(5000);
+var server = app.listen(5000, function () {
+  console.log("Express server listening on port 5000");
+  });
