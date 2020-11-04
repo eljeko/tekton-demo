@@ -22,6 +22,6 @@ app.get("/", (req, res) => {
   });
 });
 
-var server = app.listen(5000, function () {
-  console.log("Express server listening on port 5000");
+var server = app.listen(process.env.PORT, function () {
+  console.log("Express server listening on port "+process.env.PORT);
 });

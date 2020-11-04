@@ -18,6 +18,10 @@ http://localhost:5000/WeatherForecast
 
 To deploy a binary standalone version of our app we need to compile for target architecture and environment:
 
+in the dir 
+
+bookstore-stock-dotnet-api/src/RestAP
+
 ```
 dotnet clean
 dotnet restore -r rhel.7-x64
@@ -31,11 +35,11 @@ Microsoft (R) Build Engine version 16.6.0+5ff7b0c9e for .NET Core
 Copyright (C) Microsoft Corporation. All rights reserved.
 
 Build started 8/4/2020 10:14:22 AM.
-     1>Project "[PATH_TO]/ocp-dotnet-binary-delploy/src/RestAPP/RestAPP.csproj" on node 1 (Clean target(s)).
+     1>Project "[PATH_TO]/bookstore-stock-dotnet-api/src/RestAPP/RestAPP.csproj" on node 1 (Clean target(s)).
      1>CoreClean:
         [...]
         [...]        
-     1>Done Building Project "[PATH_TO]/ocp-dotnet-binary-delploy/src/RestAPP/RestAPP.csproj" (Clean target(s)).
+     1>Done Building Project "[PATH_TO]/bookstore-stock-dotnet-api/src/RestAPP/RestAPP.csproj" (Clean target(s)).
 
 Build succeeded.
     0 Warning(s)
@@ -44,37 +48,37 @@ Build succeeded.
 Time Elapsed 00:00:00.58
 host:~ $ dotnet restore -r rhel.7-x64
   Determining projects to restore...
-  Restored [PATH_TO]/ocp-dotnet-binary-delploy/src/RestAPP/RestAPP.csproj (in 9.3 sec).
+  Restored [PATH_TO]/bookstore-stock-dotnet-api/src/RestAPP/RestAPP.csproj (in 9.3 sec).
 host:~ $ dotnet publish -f netcoreapp3.1 -c Release -r rhel.7-x64 --self-contained false /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App
 Microsoft (R) Build Engine version 16.6.0+5ff7b0c9e for .NET Core
 Copyright (C) Microsoft Corporation. All rights reserved.
 
   Determining projects to restore...
-  Restored [PATH_TO]/ocp-dotnet-binary-delploy/src/RestAPP/RestAPP.csproj (in 180 ms).
-  RestAPP -> [PATH_TO]/ocp-dotnet-binary-delploy/src/RestAPP/bin/Release/netcoreapp3.1/rhel.7-x64/RestAPP.dll
-  RestAPP -> [PATH_TO]/ocp-dotnet-binary-delploy/src/RestAPP/bin/Release/netcoreapp3.1/rhel.7-x64/publish/
+  Restored [PATH_TO]/bookstore-stock-dotnet-api/src/RestAPP/RestAPP.csproj (in 180 ms).
+  RestAPP -> [PATH_TO]/bookstore-stock-dotnet-api/src/RestAPP/bin/Release/netcoreapp3.1/rhel.7-x64/RestAPP.dll
+  RestAPP -> [PATH_TO]/bookstore-stock-dotnet-api/src/RestAPP/bin/Release/netcoreapp3.1/rhel.7-x64/publish/
   ```
 
 # Binary deploy .netcore
 
-Run the commands from the  project root folder ```ocp-dotnet-binary-delploy```.
+Run the commands from the  project root folder ```bookstore-stock-dotnet-api```.
 
 Create new app:
 
 ```
-oc new-app openshift/dotnet:3.1 --binary --name=dotnet-rest-app
+oc new-app openshift/dotnet:3.1 --binary --name=bookstore-stock-api
 ```
 
 Start the binary build:
 
 ```
-oc start-build dotnet-rest-app --from-dir=src/RestAPP/bin/Release/netcoreapp3.1/rhel.7-x64/publish
+oc start-build bookstore-stock-api --from-dir=bin/Release/netcoreapp3.1/rhel.7-x64/publish
 ```
 
 Expose the service:
 
 ```
-oc expose svc/dotnet-rest-app
+oc expose svc/bookstore-stock-api
 ```
 
 Wait for the pod with the app to be available (oc get pods).
@@ -82,5 +86,5 @@ Wait for the pod with the app to be available (oc get pods).
 The url of service is:
 
 ```
-http://<YOUR_HOST>/WeatherForecast
+http://<YOUR_HOST>:<YOUR_PORT>/booksavailability/1
 ```
