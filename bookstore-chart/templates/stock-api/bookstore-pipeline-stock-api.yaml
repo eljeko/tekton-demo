@@ -5,6 +5,7 @@ items:
   metadata:
     name: stock-api-pipeline
   spec:
+    description: A dotnet ReST service pipeline
     params:
     - default: {{ .Release.Namespace }}
       description: The target namespace
