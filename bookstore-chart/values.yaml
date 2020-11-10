@@ -68,3 +68,5 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+ocphostdomain: "<CHANGE_TO_YOUR_HOST>"

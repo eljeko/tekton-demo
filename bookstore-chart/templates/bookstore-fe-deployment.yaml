@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "bookstore-chart.fullname" . }}-books-api
+  name: {{ include "bookstore-chart.fullname" . }}-fe
   labels:
-    app: bookstore-books-api
+    app: bookstore-fe
     {{- include "bookstore-chart.labels" . | nindent 4 }}    
 spec:
 {{- if not .Values.autoscaling.enabled }}
@@ -19,7 +19,7 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
-        app: bookstore-books-api
+        app: bookstore-fe
         {{- include "bookstore-chart.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
@@ -29,31 +29,24 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}-books-api
+        - name: {{ .Chart.Name }}-fe       
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}/{{ .Release.Namespace }}/bookstore-books-api:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}/{{ .Release.Namespace }}/bookstore-fe:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          env:
+            - name: BOOKSAPIURL
+              value: "http://bookstore-books-api-{{ .Release.Namespace }}{{ .Values.ocphostdomain }}"
+            - name: BOOKSTOCKAPIURL
+              value: "http://bookstore-stock-api-{{ .Release.Namespace }}{{ .Values.ocphostdomain }}"
+            - name: PORT
+              value: "8080"   
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
               containerPort: 8080
               protocol: TCP
-            - name: https
-              containerPort: 8443
-              protocol: TCP
-            - name: jolokia
-              containerPort: 8778
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
           resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+            {{- toYaml .Values.resources | nindent 12 }}            
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

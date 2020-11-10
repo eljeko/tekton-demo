@@ -1,0 +1,11 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: bookstore-fe
+    app.kubernetes.io/component: bookstore-fe
+    app.kubernetes.io/instance: bookstore-fe  
+  name: bookstore-fe
+spec:
+  lookupPolicy:
+    local: false

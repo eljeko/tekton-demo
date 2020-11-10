@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: bookstore-stock-api
+    app.kubernetes.io/component: bookstore-stock-api
+    app.kubernetes.io/instance: bookstore-stock-api
+  name: bookstore-stock-api
+spec:
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: bookstore-stock-api
+    weight: 100
+  wildcardPolicy: None

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: bookstore-fe
+    app.kubernetes.io/component: bookstore-fe
+    app.kubernetes.io/instance: bookstore-fe
+  name: bookstore-fe
+spec:
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: bookstore-fe
+  sessionAffinity: None
+  type: ClusterIP
