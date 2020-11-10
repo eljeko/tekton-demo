@@ -3,7 +3,7 @@ items:
 - apiVersion: tekton.dev/v1beta1
   kind: Pipeline
   metadata:
-    name: books-api-pipeline
+    name: stock-api-pipeline
   spec:
     params:
     - default: {{ .Release.Namespace }}
@@ -29,7 +29,7 @@ items:
       runAfter:
       - fetch-repository
       taskRef:
-        name: maven-build
+        name: dotnet-build
       workspaces:
       - name: source
         workspace: workspace-acme
@@ -40,7 +40,7 @@ items:
       runAfter:
       - build-app
       taskRef:
-        name: java-binary-deploy
+        name: dotnet-binary-deploy
       workspaces:
       - name: source
         workspace: workspace-acme
@@ -51,7 +51,7 @@ items:
       runAfter:
       - create-app-image
       taskRef:
-        name: java-rollout
+        name: dotnet-rollout
       workspaces:
       - name: source
         workspace: workspace-acme        
