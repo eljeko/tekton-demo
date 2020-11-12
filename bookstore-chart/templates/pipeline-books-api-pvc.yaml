@@ -1,11 +1,11 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: bookstore-build-pvc
+  name: books-api-pipeline-pvc
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 200Mi
+      storage: 100Mi
   volumeMode: Filesystem

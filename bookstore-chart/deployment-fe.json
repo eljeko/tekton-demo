@@ -1,0 +1,1 @@
+"{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"env\":[{\"name\":\"BOOKSAPIURL\",\"value\":\"11111\"},{\"name\":\"BOOKSTOCKAPIURL\",\"value\":\"22222\"}],\"name\":\"bookstore-chart-fe\"}]}}}}"

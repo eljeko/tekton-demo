@@ -1,21 +1,17 @@
-1. Get the application URL by running these commands:
-{{- if .Values.ingress.enabled }}
-{{- range $host := .Values.ingress.hosts }}
-  {{- range .paths }}
-  http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}{{ . }}
-  {{- end }}
-{{- end }}
-{{- else if contains "NodePort" .Values.service.type }}
-  export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "bookstore-chart.fullname" . }})
-  export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
-  echo http://$NODE_IP:$NODE_PORT
-{{- else if contains "LoadBalancer" .Values.service.type }}
-     NOTE: It may take a few minutes for the LoadBalancer IP to be available.
-           You can watch the status of by running 'kubectl get --namespace {{ .Release.Namespace }} svc -w {{ include "bookstore-chart.fullname" . }}'
-  export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "bookstore-chart.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
-  echo http://$SERVICE_IP:{{ .Values.service.port }}
-{{- else if contains "ClusterIP" .Values.service.type }}
-  export POD_NAME=$(kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "bookstore-chart.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -o jsonpath="{.items[0].metadata.name}")
-  echo "Visit http://127.0.0.1:8080 to use your application"
-  kubectl --namespace {{ .Release.Namespace }} port-forward $POD_NAME 8080:80
-{{- end }}
+Your {{ include "bookstore-chart.name" . }} is installed/updated
+
+1. You may test the services with the following URLs after you build from source
+
+  Books ReST service (Java)
+  oc get route bookstore-books-api -o jsonpath='{.status.ingress[0].host}' --namespace {{ .Release.Namespace }}
+
+  Stock ReST service (dotnet)
+  oc get route bookstore-stock-api  -o jsonpath='{.status.ingress[0].host}' --namespace {{ .Release.Namespace }}
+  
+
+2. Post install Front End setup for demo
+  
+  After all the items are installed you need to update the front-end containers env variables with the URLs of the ReST services:
+
+  oc patch  deployment/{{ include "bookstore-chart.fullname" . }}-fe -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"env\":[{\"name\":\"BOOKSAPIURL\",\"value\":\"http://$(oc get route bookstore-books-api -o jsonpath='{.status.ingress[0].host}' --namespace {{ .Release.Namespace }})\"},{\"name\":\"BOOKSTOCKAPIURL\",\"value\":\"http://$(oc get route bookstore-stock-api  -o jsonpath='{.status.ingress[0].host}' --namespace {{ .Release.Namespace }})\"}],\"name\":\"bookstore-chart-fe\"}]}}}}"
+

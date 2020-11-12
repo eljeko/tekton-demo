@@ -9,8 +9,8 @@ spec:
   steps:
     - name: simple-dotnet-publish
       image: registry.access.redhat.com/ubi8/dotnet-31 # .NET Core SDK
-      securityContext:
-        runAsUser: 0  # UBI 8 images generally run as non-root
+#      securityContext:
+#        runAsUser: 0  # UBI 8 images generally run as non-root
       script: |
           #!/usr/bin/bash
           cd /workspace/source/bookstore-stock-dotnet-api/src/RestAPP
