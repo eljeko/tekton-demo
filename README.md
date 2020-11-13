@@ -10,23 +10,31 @@ The chart is located in the ```bookstore-chart``` folder.
 
 1. Create a new OpenShift project:
 
-```oc create new-project bookstore-pipeline-demo```
+```oc new-project bookstore-pipeline-demo```
 
-2. Test the chart (just to be sure that everyrhing is formally fine):
+2. Install Tekton Operator
+
+```oc apply -f pipelines-operator.yaml```
+
+3. Test the chart with a dry run (just to be sure that everyrhing is formally fine):
 
 ```helm install --generate-name --dry-run bookstore-chart```
 
-3. Go to the project source root and install the chart: 
+4. Go to the project source root and install the chart: 
 
 ```helm install --generate-name bookstore-chart```
 
-4. At the end of installation in  the *"Post install Front End setup for demo"* the chart will **output a command** to update the frontend deployment environment variables with urls of the two ReST services: **copy the command and run it** (you need to be logged in your openshift). The command is something like:
+5. At the end of installation in  the *"Post install Front End setup for demo"* the chart will **output a command** to update the frontend deployment environment variables with urls of the two ReST services: **copy the command and run it** (you need to be logged in your openshift). The command is something like:
 
 ```
 oc patch  deployment/bookstore-chart-1605264575-fe -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"env\":[{\"name\":\"BOOKSAPIURL\",\"value\":\"http://$(oc get route bookstore-books-api -o jsonpath='{.status.ingress[0].host}' --namespace bookstore-demo)\"},{\"name\":\"BOOKSTOCKAPIURL\",\"value\":\"http://$(oc get route bookstore-stock-api  -o jsonpath='{.status.ingress[0].host}' --namespace bookstore-demo)\"}],\"name\":\"bookstore-chart-fe\"}]}}}}" --namespace bookstore-demo
 ```
 
-5. Login into web console and run the three pipeline:
+6. Start the Tekton pipelines
+   ```oc apply -f pipelineruns/```
+
+
+Alternatively Login into web console and run the three pipelines:
     
     * ```front-end-pipeline``` (run the pipeline with the pvc ```fe-pipeline-pvc```)
     * ```books-api-pipeline``` (run the pipeline with the pvc ```books-api-pipeline-pvc```)    

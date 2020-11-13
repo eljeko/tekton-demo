@@ -1,0 +1,20 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    tekton.dev/pipeline: stock-api-pipeline
+  name: stock-api-pipeline-firstrun
+  namespace: bookstore-pipeline-demo
+spec:
+  params:
+  - name: target-namespace
+    value: bookstore-pipeline-demo
+  pipelineRef:
+    name: stock-api-pipeline
+  serviceAccountName: pipeline
+  timeout: 1h0m0s
+  workspaces:
+  - name: workspace-acme
+    persistentVolumeClaim:
+      claimName: stock-api-pipeline-pvc
