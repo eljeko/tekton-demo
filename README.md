@@ -34,17 +34,17 @@ oc patch  deployment/bookstore-chart-1605264575-fe -p "{\"spec\":{\"template\":{
 
 At the end you will have the three applications running.
 
-## frontend app
+## Front-end app
 
 This is a nodejs front end app that uses the ReST services to compose the page.
 
-## books-api
+## Books API
 
 This is a java spring-boot ReST service. Is the list of books available.
 
 To test it from browser you can point to 
 
-## stock-api
+## Stock API
 
 This is a dotnet ReST service. Is the number of books available for online store.
 
