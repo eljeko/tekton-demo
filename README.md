@@ -6,7 +6,7 @@ An demo for tekton on OCP 4.x.
 
 The demo is installed with [Helm](https://heml.io/).
 
-The chart is located in the bookstore-chart
+The chart is located in the ```bookstore-chart``` folder.
 
 1. Create a new OpenShift project:
 
