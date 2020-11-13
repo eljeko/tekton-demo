@@ -32,7 +32,7 @@ oc patch  deployment/bookstore-chart-1605264575-fe -p "{\"spec\":{\"template\":{
     * ```books-api-pipeline``` (run the pipeline with the pvc ```books-api-pipeline-pvc```)    
     * ```stock-api-pipeline``` (run the pipeline with the pvc ```stock-api-pipeline-pvc```)
 
-At tje emd you will have the three applications running.
+At the end you will have the three applications running.
 
 ## frontend app
 
