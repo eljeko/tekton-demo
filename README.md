@@ -12,7 +12,7 @@ The chart is located in the ```bookstore-chart``` folder.
 
 ```oc new-project bookstore-pipeline-demo```
 
-2. Install Tekton Operator
+2. Install Tekton Operator (Optional if not installed)
 
 ```oc apply -f pipelines-operator.yaml```
 
@@ -31,14 +31,15 @@ oc patch  deployment/bookstore-chart-1605264575-fe -p "{\"spec\":{\"template\":{
 ```
 
 6. Start the Tekton pipelines
+
    ```oc apply -f pipelineruns/```
 
 
 Alternatively Login into web console and run the three pipelines:
-    
-    * ```front-end-pipeline``` (run the pipeline with the pvc ```fe-pipeline-pvc```)
-    * ```books-api-pipeline``` (run the pipeline with the pvc ```books-api-pipeline-pvc```)    
-    * ```stock-api-pipeline``` (run the pipeline with the pvc ```stock-api-pipeline-pvc```)
+
+* ```front-end-pipeline``` (run the pipeline with the pvc ```fe-pipeline-pvc```)
+* ```books-api-pipeline``` (run the pipeline with the pvc ```books-api-pipeline-pvc```)    
+* ```stock-api-pipeline``` (run the pipeline with the pvc ```stock-api-pipeline-pvc```)
 
 At the end you will have the three applications running.
 
