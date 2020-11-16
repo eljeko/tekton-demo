@@ -29,6 +29,7 @@ public class BookController {
         books.add(new Book(2, "2001: A Space Odyssey", "2001: A Space Odyssey. In the beginning of the novel, the early ancestors of humans encounter the monolith on Earth. After they interact with the monolith, their intelligence, or at least their way of thinking, takes a leap. They begin to develop tools, which let them move up the food chain.", " Arthur C. Clarke", 25));
         books.add(new Book(3, "Dune", "Dune is set in the distant future amidst a feudal interstellar society in which various noble houses control planetary fiefs. It tells the story of young Paul Atreides, whose family accepts the stewardship of the planet Arrakis.", "Frank Herbert", 23));
         books.add(new Book(4, "Title", "Description", "The Author", 32));
+        books.add(new Book(5, "Title 02", "Description 02", "The Author 02", 22));
         return books;
     }
 
