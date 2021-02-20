@@ -69,4 +69,6 @@ tolerations: []
 
 affinity: {}
 
-ocphostdomain: "<CHANGE_TO_YOUR_HOST>"
+# Update the value of ocpHostDomain before running the chart
+ocpHostDomain: "<CHANGE_TO_YOUR_HOST>"
+

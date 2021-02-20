@@ -16,19 +16,23 @@ The chart is located in the ```bookstore-chart``` folder.
 
 ```oc apply -f pipelines-operator.yaml```
 
-3. Test the chart with a dry run (just to be sure that everyrhing is formally fine):
+3. Customize the chart values before running.
+   Update the `ocpHostDomain` with your current OCP domain URL before running the chart:
+
+   ```
+   sed -i 's/^ocpHostDomain: "<CHANGE_TO_YOUR_HOST>"/ocpHostDomain: ocp4.demo.example.com/g' bookstore-chart/values.yaml
+   ```
+
+   Alternatively, it is possible to dinamically override a value from command line
+   with the `--set key=value` option without touching the `bookstore-chart/values.yaml` file.
+
+4. Test the chart with a dry run (just to be sure that everyrhing is formally fine):
 
 ```helm install --generate-name --dry-run bookstore-chart```
 
-4. Go to the project source root and install the chart: 
+5. Go to the project source root and install the chart: 
 
 ```helm install --generate-name bookstore-chart```
-
-5. At the end of installation in  the *"Post install Front End setup for demo"* the chart will **output a command** to update the frontend deployment environment variables with urls of the two ReST services: **copy the command and run it** (you need to be logged in your openshift). The command is something like:
-
-```
-oc patch  deployment/bookstore-chart-1605264575-fe -p "{\"spec\":{\"template\":{\"spec\":{\"containers\":[{\"env\":[{\"name\":\"BOOKSAPIURL\",\"value\":\"http://$(oc get route bookstore-books-api -o jsonpath='{.status.ingress[0].host}' --namespace bookstore-demo)\"},{\"name\":\"BOOKSTOCKAPIURL\",\"value\":\"http://$(oc get route bookstore-stock-api  -o jsonpath='{.status.ingress[0].host}' --namespace bookstore-demo)\"}],\"name\":\"bookstore-chart-fe\"}]}}}}" --namespace bookstore-demo
-```
 
 6. Start the Tekton pipelines
 
