@@ -35,9 +35,9 @@ spec:
           image: "{{ .Values.image.repository }}/{{ .Release.Namespace }}/bookstore-fe:{{ .Values.image.tag | default .Chart.AppVersion }}"
           env:
             - name: BOOKSAPIURL
-              value: "http://bookstore-books-api-{{ .Release.Namespace }}{{ .Values.ocphostdomain }}"
+              value: "http://bookstore-books-api-{{ .Release.Namespace }}.{{ .Values.ocpHostDomain }}"
             - name: BOOKSTOCKAPIURL
-              value: "http://bookstore-stock-api-{{ .Release.Namespace }}{{ .Values.ocphostdomain }}"
+              value: "http://bookstore-stock-api-{{ .Release.Namespace }}.{{ .Values.ocpHostDomain }}"
             - name: PORT
               value: "8080"   
           imagePullPolicy: {{ .Values.image.pullPolicy }}
